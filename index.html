@@ -647,6 +647,7 @@ input[type="range"]::-webkit-slider-thumb {
 <div class="carousel-nav" id="carousel-nav">
     <button class="carousel-btn" id="btn-prev">◀ PREV</button>
     <button class="carousel-btn" id="btn-next">NEXT ▶</button>
+    <button class="carousel-btn" id="btn-mute">🔊 MUTE</button>
 </div>
 
 <!-- ============================================================
@@ -825,12 +826,16 @@ const loadedModules = new Map();
 let currentExplodeRatio = 0;
 let targetExplodeRatio = 0;
 let activeModuleId = null;
+let baseCameraDistance = 5;
 
 const moduleKeys = ["body", "mask", "tank", "unit"];
 let isCarouselMode = false;
 let carouselIndex = 0;
 let isDraggingPart = false;
 let previousMouse = { x: 0, y: 0 };
+
+let isMuted = false;
+const ttsSynth = window.speechSynthesis;
 
 /* ============================================================
    GLTF LOADER
@@ -998,6 +1003,7 @@ function normalizeScene() {
     const finalSize = box.getSize(new THREE.Vector3());
     const finalMax = Math.max(finalSize.x, finalSize.y, finalSize.z);
     const distance = Math.max(finalMax * 1.6, 1.5);
+    baseCameraDistance = distance;
 
     camera.position.set(distance * 0.9, distance * 0.55, distance);
     controls.target.set(0, 0, 0);
@@ -1031,6 +1037,29 @@ function createBadges() {
         model.userData.badgeEl = badge;
     });
 }
+
+/* ============================================================
+   TEXT TO SPEECH
+   ============================================================ */
+
+function readPanel(model) {
+    if (isMuted || !ttsSynth) return;
+    ttsSynth.cancel();
+    
+    const text = `${model.userData.name}. ${model.userData.desc} Part number: ${model.userData.pno}. Material: ${model.userData.mat}. Specification: ${model.userData.flow}. Standard: ${model.userData.serv}.`;
+    const utterance = new SpeechSynthesisUtterance(text);
+    ttsSynth.speak(utterance);
+}
+
+document.getElementById("btn-mute").addEventListener("click", (e) => {
+    isMuted = !isMuted;
+    e.target.innerText = isMuted ? "🔇 UNMUTE" : "🔊 MUTE";
+    if (isMuted && ttsSynth) {
+        ttsSynth.cancel();
+    } else if (!isMuted && isCarouselMode && activeModuleId) {
+        readPanel(loadedModules.get(activeModuleId));
+    }
+});
 
 /* ============================================================
    CLEAR SELECTION
@@ -1071,6 +1100,10 @@ function selectModule(model) {
     if (model.userData.badgeEl) {
         model.userData.badgeEl.classList.add("active");
     }
+
+    if (isCarouselMode) {
+        readPanel(model);
+    }
 }
 
 /* ============================================================
@@ -1082,9 +1115,14 @@ function updateCarouselState() {
     carouselNav.style.display = isCarouselMode ? "flex" : "none";
     controls.enabled = !isCarouselMode;
     
-    if (isCarouselMode && !activeModuleId) {
-        selectModule(loadedModules.get(moduleKeys[carouselIndex]));
-    } else if (!isCarouselMode) {
+    if (isCarouselMode) {
+        if (!activeModuleId) {
+            selectModule(loadedModules.get(moduleKeys[carouselIndex]));
+        } else {
+            readPanel(loadedModules.get(activeModuleId));
+        }
+    } else {
+        if (ttsSynth) ttsSynth.cancel();
         loadedModules.forEach(model => {
             model.rotation.set(0, 0, 0);
         });
@@ -1286,6 +1324,11 @@ function animate() {
     requestAnimationFrame(animate);
 
     currentExplodeRatio += (targetExplodeRatio - currentExplodeRatio) * 0.10;
+
+    if (isCarouselMode) {
+        camera.position.lerp(new THREE.Vector3(0, 0, baseCameraDistance * 0.7), 0.05);
+        controls.target.lerp(new THREE.Vector3(0, 0, 0), 0.05);
+    }
 
     loadedModules.forEach((model, key) => {
         const original = model.userData.initialPosition;
