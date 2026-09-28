@@ -14,7 +14,6 @@
 Dräger PSS 7000 SCBA - 3D Exploded Viewer
 </title>
 
-
 <!-- ============================================================
      THREE.JS IMPORT MAP
      ============================================================ -->
@@ -23,18 +22,14 @@ Dräger PSS 7000 SCBA - 3D Exploded Viewer
 
 {
     "imports": {
-
         "three":
             "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-
         "three/addons/":
             "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-
     }
 }
 
 </script>
-
 
 <style>
 
@@ -43,68 +38,39 @@ Dräger PSS 7000 SCBA - 3D Exploded Viewer
    ============================================================ */
 
 :root {
-
     --bg: #f8fafc;
-
     --panel: rgba(255, 255, 255, 0.94);
-
     --border: #e2e8f0;
-
     --accent: #ea580c;
-
-    --accent-glow:
-        rgba(234, 88, 12, 0.3);
-
+    --accent-glow: rgba(234, 88, 12, 0.3);
     --text: #0f172a;
-
     --muted: #64748b;
-
     --green: #059669;
-
     --red: #dc2626;
-
     --mono:
         "SF Mono",
         "JetBrains Mono",
         "Consolas",
         monospace;
-
 }
-
 
 * {
-
     box-sizing: border-box;
-
     margin: 0;
-
     padding: 0;
-
     user-select: none;
-
 }
-
 
 html,
 body {
-
     width: 100%;
-
     height: 100%;
-
     overflow: hidden;
-
 }
 
-
 body {
-
-    background:
-        var(--bg);
-
-    color:
-        var(--text);
-
+    background: var(--bg);
+    color: var(--text);
     font-family:
         -apple-system,
         BlinkMacSystemFont,
@@ -112,969 +78,479 @@ body {
         Roboto,
         Arial,
         sans-serif;
-
 }
-
 
 /* ============================================================
    THREE.JS CONTAINER
    ============================================================ */
 
 #webgl-container {
-
     position: fixed;
-
     inset: 0;
-
     z-index: 1;
-
 }
-
 
 /* ============================================================
    LEADER LINE CANVAS
    ============================================================ */
 
 #leader-canvas {
-
     position: fixed;
-
     inset: 0;
-
     width: 100%;
-
     height: 100%;
-
     pointer-events: none;
-
     z-index: 2;
-
 }
-
 
 /* ============================================================
    LABELS
    ============================================================ */
 
 #labels-container {
-
     position: fixed;
-
     inset: 0;
-
     pointer-events: none;
-
     z-index: 3;
-
 }
-
 
 /* ============================================================
    HEADER
    ============================================================ */
 
 .header-bar {
-
     position: fixed;
-
     top: 0;
-
     left: 0;
-
     right: 0;
-
     height: 56px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
-    padding:
-        0 20px;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(248, 250, 252, 0.98),
-            rgba(248, 250, 252, 0)
-        );
-
+    padding: 0 20px;
+    background: linear-gradient(180deg, rgba(248, 250, 252, 0.98), rgba(248, 250, 252, 0));
     z-index: 10;
-
     pointer-events: none;
-
 }
-
 
 .brand {
-
     display: flex;
-
     align-items: center;
-
     gap: 10px;
-
 }
-
 
 .badge {
-
-    background:
-        var(--accent);
-
-    color:
-        #fff;
-
-    padding:
-        3px 8px;
-
-    border-radius:
-        3px;
-
-    font-size:
-        10px;
-
-    font-weight:
-        900;
-
-    letter-spacing:
-        1px;
-
+    background: var(--accent);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
 }
-
 
 .title {
-
-    font-size:
-        14px;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        1px;
-
-    text-transform:
-        uppercase;
-
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
-
 
 /* ============================================================
    STATUS PANEL
    ============================================================ */
 
 .hud-panel {
-
     position: fixed;
-
     top: 70px;
-
     left: 20px;
-
     width: 330px;
-
     padding: 14px 16px;
-
-    background:
-        var(--panel);
-
-    backdrop-filter:
-        blur(12px);
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        8px;
-
+    background: var(--panel);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 8px;
     z-index: 10;
-
-    font-family:
-        var(--mono);
-
-    font-size:
-        11px;
-
-    box-shadow: 
-        0 4px 6px -1px rgba(0, 0, 0, 0.05);
-
+    font-family: var(--mono);
+    font-size: 11px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
-
 
 .hud-title {
-
-    color:
-        var(--accent);
-
-    font-size:
-        10px;
-
-    font-weight:
-        800;
-
-    letter-spacing:
-        1px;
-
-    margin-bottom:
-        9px;
-
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 9px;
 }
-
 
 .status-row {
-
-    display:
-        flex;
-
-    justify-content:
-        space-between;
-
-    align-items:
-        center;
-
-    padding:
-        4px 0;
-
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
 }
-
 
 .status-name {
-
-    color:
-        var(--muted);
-
+    color: var(--muted);
 }
-
 
 .status-prog {
-
-    color:
-        var(--accent);
-
-    font-weight:
-        700;
-
+    color: var(--accent);
+    font-weight: 700;
 }
-
 
 .status-ok {
-
-    color:
-        var(--green);
-
-    font-weight:
-        700;
-
+    color: var(--green);
+    font-weight: 700;
 }
-
 
 .status-err {
-
-    color:
-        var(--red);
-
-    font-weight:
-        700;
-
+    color: var(--red);
+    font-weight: 700;
 }
-
 
 /* ============================================================
    INSPECTOR
    ============================================================ */
 
 .inspector {
-
     display: none;
-
     position: fixed;
-
     top: 70px;
-
     right: 20px;
-
     width: 380px;
-
     padding: 20px;
-
-    background:
-        var(--panel);
-
-    backdrop-filter:
-        blur(12px);
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        8px;
-
+    background: var(--panel);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 8px;
     z-index: 10;
-
-    box-shadow: 
-        0 4px 15px -3px rgba(0, 0, 0, 0.05);
-
+    box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.05);
 }
-
 
 .insp-tag {
-
-    color:
-        var(--accent);
-
-    font-family:
-        var(--mono);
-
-    font-size:
-        10px;
-
-    font-weight:
-        800;
-
-    letter-spacing:
-        1px;
-
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
 }
-
 
 .insp-title {
-
-    margin:
-        5px 0 12px;
-
-    font-size:
-        18px;
-
-    font-weight:
-        800;
-    
-    color: 
-        var(--text);
-
+    margin: 5px 0 12px;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
 }
-
 
 .insp-desc {
-
-    color:
-        var(--text);
-
-    font-size:
-        13px;
-
-    line-height:
-        1.6;
-
-    margin-bottom:
-        20px;
-        
-    text-align:
-        justify;
-
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: justify;
 }
-
 
 .spec-grid {
-
-    display:
-        grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:
-        8px;
-
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
 }
-
 
 .spec {
-
-    padding:
-        10px;
-
-    background:
-        #f1f5f9;
-
-    border:
-        1px solid #e2e8f0;
-
-    border-radius:
-        4px;
-
+    padding: 10px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
 }
-
 
 .spec-k {
-
-    color:
-        var(--muted);
-
-    font-family:
-        var(--mono);
-
-    font-size:
-        9px;
-
-    text-transform:
-        uppercase;
-
-    margin-bottom:
-        4px;
-
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
 }
-
 
 .spec-v {
-
-    color:
-        var(--text);
-
-    font-family:
-        var(--mono);
-
-    font-size:
-        11px;
-
-    font-weight:
-        700;
-
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
 }
-
 
 /* ============================================================
    CONTROL DECK
    ============================================================ */
 
 .control-deck {
-
     position: fixed;
-
     bottom: 20px;
-
     left: 50%;
-
-    transform:
-        translateX(-50%);
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    gap:
-        14px;
-
-    padding:
-        10px 14px;
-
-    background:
-        var(--panel);
-
-    backdrop-filter:
-        blur(12px);
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        9px;
-
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+    background: var(--panel);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 9px;
     z-index: 10;
-    
-    box-shadow: 
-        0 4px 6px -1px rgba(0, 0, 0, 0.05);
-
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
-
 
 .btn {
-
-    border:
-        1px solid #cbd5e1;
-
-    background:
-        #f8fafc;
-
-    color:
-        var(--text);
-
-    padding:
-        7px 12px;
-
-    border-radius:
-        4px;
-
-    cursor:
-        pointer;
-
-    font-family:
-        var(--mono);
-
-    font-size:
-        10px;
-
-    font-weight:
-        700;
-
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: var(--text);
+    padding: 7px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
 }
-
 
 .btn:hover {
-
-    border-color:
-        var(--accent);
-
+    border-color: var(--accent);
 }
-
 
 .btn-accent {
-
-    background:
-        var(--accent);
-
-    color:
-        #fff;
-
-    border-color:
-        var(--accent);
-
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
 }
-
 
 .slider-wrap {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    gap:
-        9px;
-
+    display: flex;
+    align-items: center;
+    gap: 9px;
 }
-
 
 .deck-txt {
-
-    color:
-        var(--muted);
-
-    font-family:
-        var(--mono);
-
-    font-size:
-        9px;
-
-    text-transform:
-        uppercase;
-
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
 }
-
 
 input[type="range"] {
-
-    width:
-        180px;
-
-    height:
-        5px;
-
-    appearance:
-        none;
-
-    background:
-        #cbd5e1;
-
-    border-radius:
-        5px;
-
-    outline:
-        none;
-
+    width: 180px;
+    height: 5px;
+    appearance: none;
+    background: #cbd5e1;
+    border-radius: 5px;
+    outline: none;
 }
-
 
 input[type="range"]::-webkit-slider-thumb {
-
-    appearance:
-        none;
-
-    width:
-        16px;
-
-    height:
-        16px;
-
-    border-radius:
-        50%;
-
-    background:
-        var(--accent);
-
-    box-shadow:
-        0 0 9px var(--accent-glow);
-
-    cursor:
-        pointer;
-
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 9px var(--accent-glow);
+    cursor: pointer;
 }
-
 
 .pct {
-
-    min-width:
-        35px;
-
-    color:
-        var(--accent);
-
-    font-family:
-        var(--mono);
-
-    font-size:
-        11px;
-
-    font-weight:
-        700;
-
+    min-width: 35px;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
 }
 
+/* ============================================================
+   CAROUSEL NAV
+   ============================================================ */
+
+.carousel-nav {
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 15px;
+    z-index: 10;
+}
+
+.carousel-btn {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 800;
+    backdrop-filter: blur(12px);
+    transition: all 0.2s ease;
+}
+
+.carousel-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
 
 /* ============================================================
    LABELS
    ============================================================ */
 
 .annotation-badge {
-
-    position:
-        absolute;
-
-    transform:
-        translateY(-50%);
-
-    pointer-events:
-        auto;
-
-    padding:
-        8px 12px;
-
-    background:
-        rgba(255, 255, 255, 0.95);
-
-    border:
-        1px solid #e2e8f0;
-
-    border-left:
-        4px solid var(--accent);
-
-    border-radius:
-        4px;
-
-    color:
-        var(--text);
-
-    font-family:
-        var(--mono);
-
-    font-size:
-        11px;
-
-    white-space:
-        nowrap;
-
-    cursor:
-        pointer;
-
-    display:
-        flex;
-
-    flex-direction:
-        column;
-
-    gap:
-        5px;
-        
-    box-shadow: 
-        0 2px 4px rgba(0, 0, 0, 0.05);
-
+    position: absolute;
+    transform: translateY(-50%);
+    pointer-events: auto;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid var(--accent);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 11px;
+    white-space: nowrap;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
-
 
 .annotation-badge:hover,
 .annotation-badge.active {
-
-    border-color:
-        var(--accent);
-
-    box-shadow:
-        0 0 10px var(--accent-glow);
-
+    border-color: var(--accent);
+    box-shadow: 0 0 10px var(--accent-glow);
 }
-
 
 .badge-title {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
+    display: flex;
+    align-items: center;
 }
-
 
 .badge-title span {
-
-    color:
-        var(--accent);
-
-    font-weight:
-        900;
-
-    margin-right:
-        6px;
-
+    color: var(--accent);
+    font-weight: 900;
+    margin-right: 6px;
 }
-
 
 .badge-meta {
-
-    color:
-        var(--muted);
-
-    font-size:
-        9px;
-
-    text-transform:
-        uppercase;
-
-    letter-spacing:
-        0.5px;
-
+    color: var(--muted);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
-
 
 /* ============================================================
    ERROR PANEL
    ============================================================ */
 
 #error-panel {
-
-    display:
-        none;
-
-    position:
-        fixed;
-
-    left:
-        20px;
-
-    bottom:
-        90px;
-
-    width:
-        470px;
-
-    max-width:
-        calc(100vw - 40px);
-
-    padding:
-        14px;
-
-    background:
-        rgba(254, 226, 226, 0.97);
-
-    border:
-        1px solid var(--red);
-
-    border-radius:
-        7px;
-
-    z-index:
-        20;
-
-    font-family:
-        var(--mono);
-
-    font-size:
-        10px;
-
+    display: none;
+    position: fixed;
+    left: 20px;
+    bottom: 90px;
+    width: 470px;
+    max-width: calc(100vw - 40px);
+    padding: 14px;
+    background: rgba(254, 226, 226, 0.97);
+    border: 1px solid var(--red);
+    border-radius: 7px;
+    z-index: 20;
+    font-family: var(--mono);
+    font-size: 10px;
 }
-
 
 #error-title {
-
-    color:
-        #b91c1c;
-
-    font-weight:
-        800;
-
-    margin-bottom:
-        7px;
-
+    color: #b91c1c;
+    font-weight: 800;
+    margin-bottom: 7px;
 }
-
 
 #error-message {
-
-    color:
-        #7f1d1d;
-
-    white-space:
-        pre-line;
-
-    line-height:
-        1.5;
-
+    color: #7f1d1d;
+    white-space: pre-line;
+    line-height: 1.5;
 }
-
 
 /* ============================================================
    INTRO SCREEN
    ============================================================ */
 
 #intro-container {
-
     position: fixed;
-
     inset: 0;
-
     z-index: 50;
-
     background: #000;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     transition: opacity 0.8s ease;
-
 }
 
 #intro-video {
-
     position: absolute;
-
     width: 100%;
-
     height: 100%;
-
     object-fit: cover;
-
     opacity: 0.6;
-
 }
 
 .intro-title {
-
     position: relative;
-
     z-index: 51;
-
     color: #ffffff;
-
     font-size: 3rem;
-
     font-weight: 900;
-
     letter-spacing: 5px;
-
     text-transform: uppercase;
-
     font-family: var(--mono);
-
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
-
 }
-
 
 /* ============================================================
    MOBILE
    ============================================================ */
 
 @media(max-width:700px) {
-
     .hud-panel {
-
-        left:
-            10px;
-
-        top:
-            62px;
-
-        width:
-            240px;
-
+        left: 10px;
+        top: 62px;
+        width: 240px;
     }
-
 
     .inspector {
-
-        right:
-            10px;
-
-        top:
-            62px;
-
-        width:
-            250px;
-
+        right: 10px;
+        top: 62px;
+        width: 250px;
     }
-
 
     .title {
-
-        display:
-            none;
-
+        display: none;
     }
-
 
     .control-deck {
-
-        width:
-            calc(100% - 20px);
-
-        bottom:
-            10px;
-
-        justify-content:
-            center;
-
-        gap:
-            7px;
-
+        width: calc(100% - 20px);
+        bottom: 10px;
+        justify-content: center;
+        gap: 7px;
     }
 
-
     input[type="range"] {
-
-        width:
-            100px;
-
+        width: 100px;
     }
     
     .intro-title {
-        
         font-size: 2rem;
-        
     }
-
 }
 
 </style>
 
 </head>
-
 
 <body>
 
@@ -1083,306 +559,112 @@ input[type="range"]::-webkit-slider-thumb {
      ============================================================ -->
 
 <div id="intro-container">
-
     <video id="intro-video" src="intro.mp4" autoplay muted playsinline></video>
-
     <div class="intro-title">Dräger 7000 BA</div>
-
 </div>
-
 
 <!-- ============================================================
      HEADER
      ============================================================ -->
 
 <header class="header-bar">
-
     <div class="brand">
-
-        <span class="badge">
-            DRÄGER
-        </span>
-
-        <span class="title">
-            PSS 7000 SCBA — 3D EXPLODED VIEW
-        </span>
-
+        <span class="badge">DRÄGER</span>
+        <span class="title">PSS 7000 SCBA — 3D EXPLODED VIEW</span>
     </div>
-
 </header>
-
 
 <!-- ============================================================
      STATUS
      ============================================================ -->
 
 <div class="hud-panel">
-
-    <div class="hud-title">
-        MODEL STATUS
-    </div>
-
-
+    <div class="hud-title">MODEL STATUS</div>
     <div class="status-row">
-
-        <span class="status-name">
-            body.glb
-        </span>
-
-        <span
-            id="st-body"
-            class="status-prog">
-
-            LOADING
-
-        </span>
-
+        <span class="status-name">body.glb</span>
+        <span id="st-body" class="status-prog">LOADING</span>
     </div>
-
-
     <div class="status-row">
-
-        <span class="status-name">
-            mask.glb
-        </span>
-
-        <span
-            id="st-mask"
-            class="status-prog">
-
-            LOADING
-
-        </span>
-
+        <span class="status-name">mask.glb</span>
+        <span id="st-mask" class="status-prog">LOADING</span>
     </div>
-
-
     <div class="status-row">
-
-        <span class="status-name">
-            tank.glb
-        </span>
-
-        <span
-            id="st-tank"
-            class="status-prog">
-
-            LOADING
-
-        </span>
-
+        <span class="status-name">tank.glb</span>
+        <span id="st-tank" class="status-prog">LOADING</span>
     </div>
-
-
     <div class="status-row">
-
-        <span class="status-name">
-            unit.glb
-        </span>
-
-        <span
-            id="st-unit"
-            class="status-prog">
-
-            LOADING
-
-        </span>
-
+        <span class="status-name">unit.glb</span>
+        <span id="st-unit" class="status-prog">LOADING</span>
     </div>
-
 </div>
-
 
 <!-- ============================================================
      INSPECTOR
      ============================================================ -->
 
 <div class="inspector">
-
-    <div
-        class="insp-tag"
-        id="insp-tag">
-
-        ASSEMBLY VIEW
-
-    </div>
-
-
-    <h2
-        class="insp-title"
-        id="insp-title">
-
-        Select a component
-
-    </h2>
-
-
-    <p
-        class="insp-desc"
-        id="insp-desc">
-
+    <div class="insp-tag" id="insp-tag">ASSEMBLY VIEW</div>
+    <h2 class="insp-title" id="insp-title">Select a component</h2>
+    <p class="insp-desc" id="insp-desc">
         Select one of the SCBA components or click its associated label 
         to view comprehensive diagnostic and material specifications.
-
     </p>
 
-
     <div class="spec-grid">
-
-
         <div class="spec">
-
-            <div class="spec-k">
-                Part No
-            </div>
-
-            <div
-                class="spec-v"
-                id="card-pno">
-
-                --
-
-            </div>
-
+            <div class="spec-k">Part No</div>
+            <div class="spec-v" id="card-pno">--</div>
         </div>
-
-
         <div class="spec">
-
-            <div class="spec-k">
-                Material
-            </div>
-
-            <div
-                class="spec-v"
-                id="card-mat">
-
-                --
-
-            </div>
-
+            <div class="spec-k">Material</div>
+            <div class="spec-v" id="card-mat">--</div>
         </div>
-
-
         <div class="spec">
-
-            <div class="spec-k">
-                Specification
-            </div>
-
-            <div
-                class="spec-v"
-                id="card-flow">
-
-                --
-
-            </div>
-
+            <div class="spec-k">Specification</div>
+            <div class="spec-v" id="card-flow">--</div>
         </div>
-
-
         <div class="spec">
-
-            <div class="spec-k">
-                Standard
-            </div>
-
-            <div
-                class="spec-v"
-                id="card-serv">
-
-                --
-
-            </div>
-
+            <div class="spec-k">Standard</div>
+            <div class="spec-v" id="card-serv">--</div>
         </div>
-
-
     </div>
-
 </div>
-
 
 <!-- ============================================================
      CONTROLS
      ============================================================ -->
 
 <div class="control-deck">
-
-
-    <button
-        class="btn btn-accent"
-        id="btn-assemble">
-
-        ASSEMBLE
-
-    </button>
-
-
+    <button class="btn btn-accent" id="btn-assemble">ASSEMBLE</button>
     <div class="slider-wrap">
-
-        <span class="deck-txt">
-            EXPLODE
-        </span>
-
-
-        <input
-            id="explode-slider"
-            type="range"
-            min="0"
-            max="100"
-            value="0"
-        >
-
-
-        <span
-            class="pct"
-            id="pct-label">
-
-            0%
-
-        </span>
-
+        <span class="deck-txt">EXPLODE</span>
+        <input id="explode-slider" type="range" min="0" max="100" value="0">
+        <span class="pct" id="pct-label">0%</span>
     </div>
-
-
-    <button
-        class="btn"
-        id="btn-explode">
-
-        EXPLODE
-
-    </button>
-
-
+    <button class="btn" id="btn-explode">EXPLODE</button>
 </div>
 
+<div class="carousel-nav" id="carousel-nav">
+    <button class="carousel-btn" id="btn-prev">◀ PREV</button>
+    <button class="carousel-btn" id="btn-next">NEXT ▶</button>
+</div>
 
 <!-- ============================================================
      THREE.JS CONTAINERS
      ============================================================ -->
 
 <div id="webgl-container"></div>
-
 <canvas id="leader-canvas"></canvas>
-
 <div id="labels-container"></div>
-
 
 <!-- ============================================================
      ERROR PANEL
      ============================================================ -->
 
 <div id="error-panel">
-
-    <div id="error-title">
-        MODEL LOADING ERROR
-    </div>
-
+    <div id="error-title">MODEL LOADING ERROR</div>
     <div id="error-message"></div>
-
 </div>
-
 
 <!-- ============================================================
      THREE.JS APPLICATION
@@ -1390,40 +672,20 @@ input[type="range"]::-webkit-slider-thumb {
 
 <script type="module">
 
-
 /* ============================================================
    IMPORTS
    ============================================================ */
 
-import * as THREE from
-    "three";
-
-
-import {
-    OrbitControls
-} from
-    "three/addons/controls/OrbitControls.js";
-
-
-import {
-    GLTFLoader
-} from
-    "three/addons/loaders/GLTFLoader.js";
-
-
-import {
-    DRACOLoader
-} from
-    "three/addons/loaders/DRACOLoader.js";
-
-
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 
 /* ============================================================
    MODEL DATA
    ============================================================ */
 
 const MODULE_METADATA = {
-
     body: {
         file: "./body.glb",
         name: "Chassis & Reducer Harness",
@@ -1435,7 +697,6 @@ const MODULE_METADATA = {
         serv: "EN 137:2006 Type 2",
         vector: new THREE.Vector3(0, 0, 0)
     },
-
     mask: {
         file: "./mask.glb",
         name: "FPS 7000 Full Face Mask",
@@ -1447,7 +708,6 @@ const MODULE_METADATA = {
         serv: "EN 136 Class 3",
         vector: new THREE.Vector3(0, 4.0, 2.0)
     },
-
     tank: {
         file: "./tank.glb",
         name: "Compressed-Air Cylinder",
@@ -1459,7 +719,6 @@ const MODULE_METADATA = {
         serv: "CE / NLL Certified",
         vector: new THREE.Vector3(0, 0, -4.0)
     },
-
     unit: {
         file: "./unit.glb",
         name: "Bodyguard 7000",
@@ -1471,721 +730,241 @@ const MODULE_METADATA = {
         serv: "IP67 / ATEX",
         vector: new THREE.Vector3(3.0, 0, 0)
     }
-
 };
-
-
 
 /* ============================================================
    DOM
    ============================================================ */
 
-const container =
-    document.getElementById(
-        "webgl-container"
-    );
-
-
-const leaderCanvas =
-    document.getElementById(
-        "leader-canvas"
-    );
-
-
-const ctx =
-    leaderCanvas.getContext(
-        "2d"
-    );
-
-
-const labelsContainer =
-    document.getElementById(
-        "labels-container"
-    );
-
-
-const errorPanel =
-    document.getElementById(
-        "error-panel"
-    );
-
-
-const errorMessage =
-    document.getElementById(
-        "error-message"
-    );
-
-
+const container = document.getElementById("webgl-container");
+const leaderCanvas = document.getElementById("leader-canvas");
+const ctx = leaderCanvas.getContext("2d");
+const labelsContainer = document.getElementById("labels-container");
+const errorPanel = document.getElementById("error-panel");
+const errorMessage = document.getElementById("error-message");
+const carouselNav = document.getElementById("carousel-nav");
+const slider = document.getElementById("explode-slider");
+const pctLabel = document.getElementById("pct-label");
 
 /* ============================================================
    SCENE
    ============================================================ */
 
-const scene =
-    new THREE.Scene();
-
-
-scene.background =
-    new THREE.Color(
-        0xf8fafc
-    );
-
-
-scene.fog =
-    new THREE.FogExp2(
-        0xf8fafc,
-        0.06
-    );
-
-
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xf8fafc);
+scene.fog = new THREE.FogExp2(0xf8fafc, 0.06);
 
 /* ============================================================
    CAMERA
    ============================================================ */
 
-const camera =
-    new THREE.PerspectiveCamera(
-
-        45,
-
-        window.innerWidth /
-        window.innerHeight,
-
-        0.01,
-
-        1000
-
-    );
-
-
-camera.position.set(
-    3,
-    2,
-    4
-);
-
-
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000);
+camera.position.set(3, 2, 4);
 
 /* ============================================================
    RENDERER
    ============================================================ */
 
-const renderer =
-    new THREE.WebGLRenderer({
-
-        antialias:
-            true,
-
-        alpha:
-            false
-
-    });
-
-
-renderer.setPixelRatio(
-    Math.min(
-        window.devicePixelRatio,
-        2
-    )
-);
-
-
-renderer.setSize(
-    window.innerWidth,
-    window.innerHeight
-);
-
-
-renderer.outputColorSpace =
-    THREE.SRGBColorSpace;
-
-
-renderer.toneMapping =
-    THREE.ACESFilmicToneMapping;
-
-
-renderer.toneMappingExposure =
-    1.0;
-
-
-container.appendChild(
-    renderer.domElement
-);
-
-
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+container.appendChild(renderer.domElement);
 
 /* ============================================================
    ORBIT CONTROLS
    ============================================================ */
 
-const controls =
-    new OrbitControls(
-        camera,
-        renderer.domElement
-    );
-
-
-controls.enableDamping =
-    true;
-
-
-controls.dampingFactor =
-    0.06;
-
-
-controls.minDistance =
-    0.1;
-
-
-controls.maxDistance =
-    100;
-
-
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
+controls.minDistance = 0.1;
+controls.maxDistance = 100;
 
 /* ============================================================
    LIGHTING
    ============================================================ */
 
-const ambientLight =
-    new THREE.AmbientLight(
-        0xffffff,
-        1.5
-    );
+const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+scene.add(ambientLight);
 
+const keyLight = new THREE.DirectionalLight(0xffffff, 1.8);
+keyLight.position.set(5, 8, 6);
+scene.add(keyLight);
 
-scene.add(
-    ambientLight
-);
+const fillLight = new THREE.DirectionalLight(0x9db7ff, 0.8);
+fillLight.position.set(-5, 3, -5);
+scene.add(fillLight);
 
-
-const keyLight =
-    new THREE.DirectionalLight(
-        0xffffff,
-        1.8
-    );
-
-
-keyLight.position.set(
-    5,
-    8,
-    6
-);
-
-
-scene.add(
-    keyLight
-);
-
-
-const fillLight =
-    new THREE.DirectionalLight(
-        0x9db7ff,
-        0.8
-    );
-
-
-fillLight.position.set(
-    -5,
-    3,
-    -5
-);
-
-
-scene.add(
-    fillLight
-);
-
-
-const orangeLight =
-    new THREE.PointLight(
-        0xea580c,
-        1.5,
-        10
-    );
-
-
-orangeLight.position.set(
-    -3,
-    2,
-    2
-);
-
-
-scene.add(
-    orangeLight
-);
-
-
+const orangeLight = new THREE.PointLight(0xea580c, 1.5, 10);
+orangeLight.position.set(-3, 2, 2);
+scene.add(orangeLight);
 
 /* ============================================================
    GRID
    ============================================================ */
 
-const grid =
-    new THREE.GridHelper(
-        10,
-        20,
-        0xea580c,
-        0xcbd5e1
-    );
-
-
-grid.position.y =
-    -1.5;
-
-
-scene.add(
-    grid
-);
-
-
+const grid = new THREE.GridHelper(10, 20, 0xea580c, 0xcbd5e1);
+grid.position.y = -1.5;
+scene.add(grid);
 
 /* ============================================================
    ASSEMBLY
    ============================================================ */
 
-const assemblyGroup =
-    new THREE.Group();
-
-
-scene.add(
-    assemblyGroup
-);
-
-
+const assemblyGroup = new THREE.Group();
+scene.add(assemblyGroup);
 
 /* ============================================================
    STATE
    ============================================================ */
 
-const loadedModules =
-    new Map();
+const loadedModules = new Map();
+let currentExplodeRatio = 0;
+let targetExplodeRatio = 0;
+let activeModuleId = null;
 
-
-let currentExplodeRatio =
-    0;
-
-
-let targetExplodeRatio =
-    0;
-
-
-let activeModuleId =
-    null;
-
-
+const moduleKeys = ["body", "mask", "tank", "unit"];
+let isCarouselMode = false;
+let carouselIndex = 0;
+let isDraggingPart = false;
+let previousMouse = { x: 0, y: 0 };
 
 /* ============================================================
    GLTF LOADER
    ============================================================ */
 
-const loader =
-    new GLTFLoader();
-
-
+const loader = new GLTFLoader();
 
 /* ============================================================
    DRACO LOADER
    ============================================================ */
 
-const dracoLoader =
-    new DRACOLoader();
-
-
-dracoLoader.setDecoderPath(
-
-    "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/"
-
-);
-
-
-loader.setDRACOLoader(
-    dracoLoader
-);
-
-
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath("https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/");
+loader.setDRACOLoader(dracoLoader);
 
 /* ============================================================
    ERROR HANDLING
    ============================================================ */
 
-function showError(
-    message
-) {
-
-    errorPanel.style.display =
-        "block";
-
-    errorMessage.innerText =
-        message;
-
+function showError(message) {
+    errorPanel.style.display = "block";
+    errorMessage.innerText = message;
 }
-
 
 function hideError() {
-
-    errorPanel.style.display =
-        "none";
-
+    errorPanel.style.display = "none";
 }
-
-
 
 /* ============================================================
    STATUS
    ============================================================ */
 
-function setStatus(
-    id,
-    text,
-    className
-) {
-
-    const element =
-        document.getElementById(
-            `st-${id}`
-        );
-
-
-    if (!element) {
-
-        return;
-
-    }
-
-
-    element.innerText =
-        text;
-
-
-    element.className =
-        className;
-
+function setStatus(id, text, className) {
+    const element = document.getElementById(`st-${id}`);
+    if (!element) return;
+    element.innerText = text;
+    element.className = className;
 }
-
-
 
 /* ============================================================
    LOAD MODEL
    ============================================================ */
 
-function loadModel(
-    key
-) {
-
-
-    const meta =
-        MODULE_METADATA[key];
-
-
-    const start =
-        performance.now();
-
-
-    setStatus(
-        key,
-        "LOADING",
-        "status-prog"
-    );
-
-
-    console.log(
-        "[GLB] Loading:",
-        meta.file
-    );
-
+function loadModel(key) {
+    const meta = MODULE_METADATA[key];
+    const start = performance.now();
+    setStatus(key, "LOADING", "status-prog");
+    console.log("[GLB] Loading:", meta.file);
 
     loader.load(
-
         meta.file,
-
-
-        /* ====================================================
-           SUCCESS
-           ==================================================== */
-
         gltf => {
-
-
-            const elapsed =
-                (
-                    performance.now() -
-                    start
-                ) / 1000;
-
-
-            const model =
-                gltf.scene;
-
-
-            /*
-             * Establish local geometric center for tracking label anchoring
-             */
+            const elapsed = (performance.now() - start) / 1000;
+            const model = gltf.scene;
 
             const box = new THREE.Box3().setFromObject(model);
             const center = box.getCenter(new THREE.Vector3());
             const localCenter = model.worldToLocal(center);
 
-            /*
-             * Store original position.
-             */
+            model.userData = {
+                id: key,
+                ...meta,
+                initialPosition: model.position.clone(),
+                localCenter: localCenter,
+                badgeEl: null
+            };
 
-            model.userData =
-                {
+            model.traverse(object => {
+                if (object.isMesh) {
+                    object.castShadow = true;
+                    object.receiveShadow = true;
 
-                    id:
-                        key,
+                    if (object.material) {
+                        const materials = Array.isArray(object.material) ? object.material : [object.material];
+                        for (let i = 0; i < materials.length; i++) {
+                            let material = materials[i];
+                            
+                            if (material.map) material.map.colorSpace = THREE.SRGBColorSpace;
+                            if (material.emissiveMap) material.emissiveMap.colorSpace = THREE.SRGBColorSpace;
 
-                    ...meta,
+                            if (material.name && material.name.toLowerCase().match(/glass|visor|lens|clear|transparent/i)) {
+                                const glassMat = new THREE.MeshPhysicalMaterial({
+                                    name: material.name,
+                                    color: material.color || new THREE.Color(0xffffff),
+                                    metalness: 0.1,
+                                    roughness: 0.05,
+                                    transmission: 0.95,
+                                    ior: 1.5,
+                                    thickness: 0.05,
+                                    transparent: true,
+                                    opacity: 1.0,
+                                    side: THREE.DoubleSide
+                                });
 
-                    initialPosition:
-                        model.position.clone(),
-                        
-                    localCenter:
-                        localCenter,
-
-                    badgeEl:
-                        null
-
-                };
-
-
-            /*
-             * Improve rendering and apply glass material to visor.
-             */
-
-            model.traverse(
-                object => {
-
-
-                    if (
-                        object.isMesh
-                    ) {
-
-
-                        object.castShadow =
-                            true;
-
-
-                        object.receiveShadow =
-                            true;
-
-
-                        if (
-                            object.material
-                        ) {
-
-                            const materials =
-                                Array.isArray(
-                                    object.material
-                                )
-
-                                    ? object.material
-
-                                    : [
-                                        object.material
-                                    ];
-
-                            for (let i = 0; i < materials.length; i++) {
-                                let material = materials[i];
-                                
-                                if (
-                                    material.map
-                                ) {
-                                    material.map.colorSpace =
-                                        THREE.SRGBColorSpace;
-                                }
-
-                                if (
-                                    material.emissiveMap
-                                ) {
-                                    material.emissiveMap.colorSpace =
-                                        THREE.SRGBColorSpace;
-                                }
-
-                                /*
-                                 * Configure transparent glass properties for mask visors/lenses.
-                                 */
-                                if (
-                                    material.name &&
-                                    material.name.toLowerCase().match(/glass|visor|lens|clear|transparent/i)
-                                ) {
-                                    const glassMat = new THREE.MeshPhysicalMaterial({
-                                        name: material.name,
-                                        color: material.color || new THREE.Color(0xffffff),
-                                        metalness: 0.1,
-                                        roughness: 0.05,
-                                        transmission: 0.95,
-                                        ior: 1.5,
-                                        thickness: 0.05,
-                                        transparent: true,
-                                        opacity: 1.0,
-                                        side: THREE.DoubleSide
-                                    });
-
-                                    if (Array.isArray(object.material)) {
-                                        object.material[i] = glassMat;
-                                    } else {
-                                        object.material = glassMat;
-                                    }
+                                if (Array.isArray(object.material)) {
+                                    object.material[i] = glassMat;
+                                } else {
+                                    object.material = glassMat;
                                 }
                             }
                         }
                     }
                 }
-            );
+            });
 
+            assemblyGroup.add(model);
+            loadedModules.set(key, model);
+            setStatus(key, `LOADED ${elapsed.toFixed(2)}s`, "status-ok");
+            console.log(`[GLB] ${key} loaded successfully`);
 
-            assemblyGroup.add(
-                model
-            );
-
-
-            loadedModules.set(
-                key,
-                model
-            );
-
-
-            setStatus(
-                key,
-                `LOADED ${elapsed.toFixed(2)}s`,
-                "status-ok"
-            );
-
-
-            console.log(
-                `[GLB] ${key} loaded successfully`
-            );
-
-
-            /*
-             * When all four are loaded.
-             */
-
-            if (
-                loadedModules.size === 4
-            ) {
-
-                console.log(
-                    "[GLB] ALL MODELS LOADED"
-                );
-
+            if (loadedModules.size === 4) {
+                console.log("[GLB] ALL MODELS LOADED");
                 document.querySelector(".hud-panel").style.display = "none";
-
                 normalizeScene();
-
                 createBadges();
-
                 hideError();
-
             }
-
         },
-
-
-        /* ====================================================
-           PROGRESS
-           ==================================================== */
-
         xhr => {
-
-
-            if (
-                xhr.lengthComputable
-            ) {
-
-
-                const percent =
-                    Math.round(
-                        (
-                            xhr.loaded /
-                            xhr.total
-                        ) * 100
-                    );
-
-
-                setStatus(
-                    key,
-                    `${percent}%`,
-                    "status-prog"
-                );
-
-
-                console.log(
-                    `[GLB] ${key}: ${percent}%`
-                );
-
+            if (xhr.lengthComputable) {
+                const percent = Math.round((xhr.loaded / xhr.total) * 100);
+                setStatus(key, `${percent}%`, "status-prog");
+                console.log(`[GLB] ${key}: ${percent}%`);
             }
-
         },
-
-
-        /* ====================================================
-           ERROR
-           ==================================================== */
-
         error => {
-
-
-            console.error(
-                "[GLB] LOAD FAILED",
-                key,
-                meta.file,
-                error
-            );
-
-
-            setStatus(
-                key,
-                "FAILED",
-                "status-err"
-            );
-
-
-            let detail =
-                "Unknown loading error.";
-
-
-            if (
-                error &&
-                error.message
-            ) {
-
-                detail =
-                    error.message;
-
-            }
-
-
-            showError(
-
-                `Unable to load:
-
-${meta.file}
-
-Error:
-${detail}
-
-Folder must contain:
-
-index.html
-body.glb
-mask.glb
-tank.glb
-unit.glb
-
-The GLTF loader has Draco support enabled.`
-
-            );
-
+            console.error("[GLB] LOAD FAILED", key, meta.file, error);
+            setStatus(key, "FAILED", "status-err");
+            let detail = "Unknown loading error.";
+            if (error && error.message) detail = error.message;
+            showError(`Unable to load:\n\n${meta.file}\n\nError:\n${detail}\n\nFolder must contain:\n\nindex.html\nbody.glb\nmask.glb\ntank.glb\nunit.glb\n\nThe GLTF loader has Draco support enabled.`);
         }
-
     );
-
 }
-
-
 
 /* ============================================================
    LOAD ALL MODELS
@@ -2196,986 +975,362 @@ loadModel("mask");
 loadModel("tank");
 loadModel("unit");
 
-
-
 /* ============================================================
    NORMALISE / FRAME
    ============================================================ */
 
 function normalizeScene() {
+    if (loadedModules.size === 0) return;
+    let box = new THREE.Box3().setFromObject(assemblyGroup);
+    if (box.isEmpty()) return;
 
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
+    const maxDimension = Math.max(size.x, size.y, size.z);
 
-    if (
-        loadedModules.size === 0
-    ) {
+    if (maxDimension > 10) assemblyGroup.scale.setScalar(2 / maxDimension);
 
-        return;
+    box = new THREE.Box3().setFromObject(assemblyGroup);
+    const newCenter = box.getCenter(new THREE.Vector3());
+    assemblyGroup.position.sub(newCenter);
 
-    }
+    box = new THREE.Box3().setFromObject(assemblyGroup);
+    const finalSize = box.getSize(new THREE.Vector3());
+    const finalMax = Math.max(finalSize.x, finalSize.y, finalSize.z);
+    const distance = Math.max(finalMax * 1.6, 1.5);
 
-
-    let box =
-        new THREE.Box3()
-            .setFromObject(
-                assemblyGroup
-            );
-
-
-    if (
-        box.isEmpty()
-    ) {
-
-        return;
-
-    }
-
-
-    const size =
-        box.getSize(
-            new THREE.Vector3()
-        );
-
-
-    const center =
-        box.getCenter(
-            new THREE.Vector3()
-        );
-
-
-    const maxDimension =
-        Math.max(
-            size.x,
-            size.y,
-            size.z
-        );
-
-
-    /*
-     * Scale huge models.
-     */
-
-    if (
-        maxDimension > 10
-    ) {
-
-        assemblyGroup.scale.setScalar(
-            2 / maxDimension
-        );
-
-    }
-
-
-    /*
-     * Recalculate.
-     */
-
-    box =
-        new THREE.Box3()
-            .setFromObject(
-                assemblyGroup
-            );
-
-
-    const newCenter =
-        box.getCenter(
-            new THREE.Vector3()
-        );
-
-
-    assemblyGroup.position.sub(
-        newCenter
-    );
-
-
-    /*
-     * Camera framing.
-     */
-
-    box =
-        new THREE.Box3()
-            .setFromObject(
-                assemblyGroup
-            );
-
-
-    const finalSize =
-        box.getSize(
-            new THREE.Vector3()
-        );
-
-
-    const finalMax =
-        Math.max(
-            finalSize.x,
-            finalSize.y,
-            finalSize.z
-        );
-
-
-    const distance =
-        Math.max(
-            finalMax * 1.6,
-            1.5
-        );
-
-
-    camera.position.set(
-
-        distance * 0.9,
-
-        distance * 0.55,
-
-        distance
-
-    );
-
-
-    controls.target.set(
-        0,
-        0,
-        0
-    );
-
-
+    camera.position.set(distance * 0.9, distance * 0.55, distance);
+    controls.target.set(0, 0, 0);
     controls.update();
-
 }
-
-
 
 /* ============================================================
    CREATE LABELS
    ============================================================ */
 
 function createBadges() {
+    labelsContainer.innerHTML = "";
+    let number = 1;
 
+    loadedModules.forEach(model => {
+        const badge = document.createElement("div");
+        badge.className = "annotation-badge";
+        badge.innerHTML = `<div class="badge-title"><span>${String(number).padStart(2,"0")}</span>${model.userData.name}</div><div class="badge-meta">PN: ${model.userData.pno} | MAT: ${model.userData.mat}</div>`;
+        number++;
 
-    labelsContainer.innerHTML =
-        "";
+        badge.addEventListener("pointerdown", event => {
+            event.stopPropagation();
+            selectModule(model);
+        });
 
+        badge.addEventListener("pointerenter", event => {
+            selectModule(model);
+        });
 
-    let number =
-        1;
-
-
-    loadedModules.forEach(
-        model => {
-
-
-            const badge =
-                document.createElement(
-                    "div"
-                );
-
-
-            badge.className =
-                "annotation-badge";
-
-
-            badge.innerHTML =
-
-                `<div class="badge-title"><span>${
-                    String(number)
-                        .padStart(2,"0")
-                }</span>${model.userData.name}</div>` +
-
-                `<div class="badge-meta">PN: ${model.userData.pno} | MAT: ${model.userData.mat}</div>`;
-
-
-            number++;
-
-
-            badge.addEventListener(
-                "pointerdown",
-                event => {
-
-
-                    event.stopPropagation();
-
-
-                    selectModule(
-                        model
-                    );
-
-                }
-            );
-
-            badge.addEventListener(
-                "pointerenter",
-                event => {
-
-                    selectModule(
-                        model
-                    );
-
-                }
-            );
-
-
-            labelsContainer.appendChild(
-                badge
-            );
-
-
-            model.userData.badgeEl =
-                badge;
-
-        }
-    );
-
+        labelsContainer.appendChild(badge);
+        model.userData.badgeEl = badge;
+    });
 }
-
-
 
 /* ============================================================
    CLEAR SELECTION
    ============================================================ */
 
 function clearSelection() {
-
     activeModuleId = null;
-
     const inspectorPanel = document.querySelector(".inspector");
-    if (inspectorPanel) {
-        inspectorPanel.style.display = "none";
-    }
-
-    document
-        .querySelectorAll(".annotation-badge")
-        .forEach(badge => {
-            badge.classList.remove("active");
-        });
-
+    if (inspectorPanel) inspectorPanel.style.display = "none";
+    document.querySelectorAll(".annotation-badge").forEach(badge => {
+        badge.classList.remove("active");
+    });
 }
-
-
 
 /* ============================================================
    SELECT MODULE
    ============================================================ */
 
-function selectModule(
-    model
-) {
-
-
-    activeModuleId =
-        model.userData.id;
-
+function selectModule(model) {
+    activeModuleId = model.userData.id;
+    carouselIndex = moduleKeys.indexOf(model.userData.id);
 
     const inspectorPanel = document.querySelector(".inspector");
-    if (inspectorPanel) {
-        inspectorPanel.style.display = "block";
+    if (inspectorPanel) inspectorPanel.style.display = "block";
+
+    document.getElementById("insp-tag").innerText = model.userData.tag;
+    document.getElementById("insp-title").innerText = model.userData.name;
+    document.getElementById("insp-desc").innerText = model.userData.desc;
+    document.getElementById("card-pno").innerText = model.userData.pno;
+    document.getElementById("card-mat").innerText = model.userData.mat;
+    document.getElementById("card-flow").innerText = model.userData.flow;
+    document.getElementById("card-serv").innerText = model.userData.serv;
+
+    document.querySelectorAll(".annotation-badge").forEach(badge => {
+        badge.classList.remove("active");
+    });
+
+    if (model.userData.badgeEl) {
+        model.userData.badgeEl.classList.add("active");
     }
-
-
-    document.getElementById(
-        "insp-tag"
-    ).innerText =
-        model.userData.tag;
-
-
-    document.getElementById(
-        "insp-title"
-    ).innerText =
-        model.userData.name;
-
-
-    document.getElementById(
-        "insp-desc"
-    ).innerText =
-        model.userData.desc;
-
-
-    document.getElementById(
-        "card-pno"
-    ).innerText =
-        model.userData.pno;
-
-
-    document.getElementById(
-        "card-mat"
-    ).innerText =
-        model.userData.mat;
-
-
-    document.getElementById(
-        "card-flow"
-    ).innerText =
-        model.userData.flow;
-
-
-    document.getElementById(
-        "card-serv"
-    ).innerText =
-        model.userData.serv;
-
-
-    document
-        .querySelectorAll(
-            ".annotation-badge"
-        )
-        .forEach(
-            badge => {
-
-                badge.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-    if (
-        model.userData.badgeEl
-    ) {
-
-        model.userData.badgeEl
-            .classList
-            .add(
-                "active"
-            );
-
-    }
-
 }
 
-
-
 /* ============================================================
-   RAYCASTER
+   CONTROLS / CAROUSEL LOGIC
    ============================================================ */
 
-const raycaster =
-    new THREE.Raycaster();
+function updateCarouselState() {
+    isCarouselMode = targetExplodeRatio === 1;
+    carouselNav.style.display = isCarouselMode ? "flex" : "none";
+    controls.enabled = !isCarouselMode;
+    
+    if (isCarouselMode && !activeModuleId) {
+        selectModule(loadedModules.get(moduleKeys[carouselIndex]));
+    } else if (!isCarouselMode) {
+        loadedModules.forEach(model => {
+            model.rotation.set(0, 0, 0);
+        });
+    }
+}
 
+slider.addEventListener("input", event => {
+    targetExplodeRatio = Number(event.target.value) / 100;
+    pctLabel.innerText = `${event.target.value}%`;
+    updateCarouselState();
+});
 
-const mouse =
-    new THREE.Vector2();
+document.getElementById("btn-assemble").addEventListener("click", () => {
+    targetExplodeRatio = 0;
+    slider.value = 0;
+    pctLabel.innerText = "0%";
+    updateCarouselState();
+});
 
+document.getElementById("btn-explode").addEventListener("click", () => {
+    targetExplodeRatio = 1;
+    slider.value = 100;
+    pctLabel.innerText = "100%";
+    updateCarouselState();
+});
 
-window.addEventListener(
-    "pointerdown",
-    event => {
+document.getElementById("btn-prev").addEventListener("click", () => {
+    carouselIndex = (carouselIndex - 1 + moduleKeys.length) % moduleKeys.length;
+    selectModule(loadedModules.get(moduleKeys[carouselIndex]));
+});
 
+document.getElementById("btn-next").addEventListener("click", () => {
+    carouselIndex = (carouselIndex + 1) % moduleKeys.length;
+    selectModule(loadedModules.get(moduleKeys[carouselIndex]));
+});
 
-        /*
-         * Ignore UI.
-         */
+/* ============================================================
+   RAYCASTER / POINTER LOGIC
+   ============================================================ */
 
-        if (
-            event.target.closest(
-                ".control-deck"
-            ) ||
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
 
-            event.target.closest(
-                ".inspector"
-            ) ||
+window.addEventListener("pointerdown", event => {
+    if (
+        event.target.closest(".control-deck") ||
+        event.target.closest(".inspector") ||
+        event.target.closest(".hud-panel") ||
+        event.target.closest("#intro-container") ||
+        event.target.closest(".header-bar") ||
+        event.target.closest(".annotation-badge") ||
+        event.target.closest(".carousel-nav")
+    ) {
+        return;
+    }
 
-            event.target.closest(
-                ".hud-panel"
-            ) ||
-            
-            event.target.closest(
-                "#intro-container"
-            ) ||
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
 
-            event.target.closest(
-                ".header-bar"
-            ) ||
+    const models = Array.from(loadedModules.values());
+    const intersections = raycaster.intersectObjects(models, true);
 
-            event.target.closest(
-                ".annotation-badge"
-            )
-        ) {
-
-            return;
-
-        }
-
-
-        mouse.x =
-            (
-                event.clientX /
-                window.innerWidth
-            ) * 2 - 1;
-
-
-        mouse.y =
-            -(
-                event.clientY /
-                window.innerHeight
-            ) * 2 + 1;
-
-
-        raycaster.setFromCamera(
-            mouse,
-            camera
-        );
-
-
-        const models =
-            Array.from(
-                loadedModules.values()
-            );
-
-
-        const intersections =
-            raycaster.intersectObjects(
-                models,
-                true
-            );
-
-
-        if (
-            intersections.length === 0
-        ) {
+    if (intersections.length === 0) {
+        if (!isCarouselMode) {
             clearSelection();
-            return;
-        }
-
-
-        let selected =
-            intersections[0].object;
-
-
-        while (
-            selected.parent &&
-            !models.includes(
-                selected
-            )
-        ) {
-
-            selected =
-                selected.parent;
-
-        }
-
-
-        if (
-            models.includes(
-                selected
-            )
-        ) {
-
-            selectModule(
-                selected
-            );
-
         } else {
-            clearSelection();
+            isDraggingPart = true;
+            previousMouse.x = event.clientX;
+            previousMouse.y = event.clientY;
         }
-
+        return;
     }
-);
 
-
-window.addEventListener(
-    "pointermove",
-    event => {
-
-        if (
-            event.target.closest(".control-deck") ||
-            event.target.closest(".inspector") ||
-            event.target.closest(".hud-panel") ||
-            event.target.closest("#intro-container") ||
-            event.target.closest(".header-bar") ||
-            event.target.closest(".annotation-badge")
-        ) {
-            return;
-        }
-
-        mouse.x =
-            (
-                event.clientX /
-                window.innerWidth
-            ) * 2 - 1;
-
-        mouse.y =
-            -(
-                event.clientY /
-                window.innerHeight
-            ) * 2 + 1;
-
-        raycaster.setFromCamera(
-            mouse,
-            camera
-        );
-
-        const models =
-            Array.from(
-                loadedModules.values()
-            );
-
-        const intersections =
-            raycaster.intersectObjects(
-                models,
-                true
-            );
-
-        if (
-            intersections.length === 0
-        ) {
-            if (activeModuleId !== null) {
-                clearSelection();
-            }
-            return;
-        }
-
-        let selected =
-            intersections[0].object;
-
-        while (
-            selected.parent &&
-            !models.includes(selected)
-        ) {
-            selected =
-                selected.parent;
-        }
-
-        if (
-            models.includes(selected)
-        ) {
-            if (activeModuleId !== selected.userData.id) {
-                selectModule(
-                    selected
-                );
-            }
-        } else {
-            if (activeModuleId !== null) {
-                clearSelection();
-            }
-        }
-
+    let selected = intersections[0].object;
+    while (selected.parent && !models.includes(selected)) {
+        selected = selected.parent;
     }
-);
 
-
-/* ============================================================
-   EXPLODE SLIDER
-   ============================================================ */
-
-const slider =
-    document.getElementById(
-        "explode-slider"
-    );
-
-
-const pctLabel =
-    document.getElementById(
-        "pct-label"
-    );
-
-
-slider.addEventListener(
-    "input",
-    event => {
-
-
-        targetExplodeRatio =
-            Number(
-                event.target.value
-            ) / 100;
-
-
-        pctLabel.innerText =
-            `${event.target.value}%`;
-
+    if (models.includes(selected)) {
+        selectModule(selected);
+        if (isCarouselMode) {
+            isDraggingPart = true;
+            previousMouse.x = event.clientX;
+            previousMouse.y = event.clientY;
+        }
+    } else if (!isCarouselMode) {
+        clearSelection();
     }
-);
+});
 
-
-
-/* ============================================================
-   ASSEMBLE BUTTON
-   ============================================================ */
-
-document
-    .getElementById(
-        "btn-assemble"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-
-            targetExplodeRatio =
-                0;
-
-
-            slider.value =
-                0;
-
-
-            pctLabel.innerText =
-                "0%";
-
+window.addEventListener("pointermove", event => {
+    if (isCarouselMode && isDraggingPart && activeModuleId) {
+        const deltaX = event.clientX - previousMouse.x;
+        const deltaY = event.clientY - previousMouse.y;
+        const activeModel = loadedModules.get(activeModuleId);
+        
+        if (activeModel) {
+            activeModel.rotation.y += deltaX * 0.01;
+            activeModel.rotation.x += deltaY * 0.01;
         }
-    );
+        
+        previousMouse.x = event.clientX;
+        previousMouse.y = event.clientY;
+        return;
+    }
 
+    if (
+        event.target.closest(".control-deck") ||
+        event.target.closest(".inspector") ||
+        event.target.closest(".hud-panel") ||
+        event.target.closest("#intro-container") ||
+        event.target.closest(".header-bar") ||
+        event.target.closest(".annotation-badge") ||
+        event.target.closest(".carousel-nav")
+    ) {
+        return;
+    }
 
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+});
 
-/* ============================================================
-   EXPLODE BUTTON
-   ============================================================ */
-
-document
-    .getElementById(
-        "btn-explode"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-
-            targetExplodeRatio =
-                1;
-
-
-            slider.value =
-                100;
-
-
-            pctLabel.innerText =
-                "100%";
-
-        }
-    );
-
-
+window.addEventListener("pointerup", () => {
+    isDraggingPart = false;
+});
 
 /* ============================================================
    LABEL POSITIONS + LEADER LINES
    ============================================================ */
 
 function updateLabels() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
 
-
-    const width =
-        window.innerWidth;
-
-
-    const height =
-        window.innerHeight;
-
-
-    if (
-        leaderCanvas.width !== width ||
-        leaderCanvas.height !== height
-    ) {
-
-        leaderCanvas.width =
-            width;
-
-        leaderCanvas.height =
-            height;
-
+    if (leaderCanvas.width !== width || leaderCanvas.height !== height) {
+        leaderCanvas.width = width;
+        leaderCanvas.height = height;
     }
 
+    ctx.clearRect(0, 0, width, height);
 
-    ctx.clearRect(
-        0,
-        0,
-        width,
-        height
-    );
+    loadedModules.forEach(model => {
+        const badge = model.userData.badgeEl;
+        if (!badge) return;
 
+        const worldPosition = model.localToWorld(model.userData.localCenter.clone());
+        const projected = worldPosition.clone().project(camera);
 
-    loadedModules.forEach(
-        model => {
-
-
-            const badge =
-                model.userData.badgeEl;
-
-
-            if (!badge) {
-
-                return;
-
-            }
-
-
-            const worldPosition =
-                model.localToWorld(
-                    model.userData.localCenter.clone()
-                );
-
-
-            const projected =
-                worldPosition.clone()
-                    .project(
-                        camera
-                    );
-
-
-            if (
-                projected.z > 1
-            ) {
-
-                badge.style.display =
-                    "none";
-
-                return;
-
-            }
-
-
-            badge.style.display =
-                "block";
-
-
-            const screenX =
-                (
-                    projected.x * 0.5 +
-                    0.5
-                ) * width;
-
-
-            const screenY =
-                (
-                    -projected.y * 0.5 +
-                    0.5
-                ) * height;
-
-
-            if (!model.userData.side) {
-                model.userData.side = screenX > width / 2 ? "right" : "left";
-            } else {
-                const buffer = 50;
-                if (model.userData.side === "left" && screenX > width / 2 + buffer) {
-                    model.userData.side = "right";
-                } else if (model.userData.side === "right" && screenX < width / 2 - buffer) {
-                    model.userData.side = "left";
-                }
-            }
-
-            const right =
-                model.userData.side === "right";
-
-
-            const offset =
-                110;
-
-
-            const badgeX =
-                right
-
-                    ? screenX + offset
-
-                    : screenX - offset -
-                      badge.offsetWidth;
-
-
-            badge.style.left =
-                `${badgeX}px`;
-
-
-            badge.style.top =
-                `${screenY}px`;
-
-
-            /*
-             * Leader line.
-             */
-
-            ctx.beginPath();
-
-
-            ctx.strokeStyle =
-
-                model.userData.id ===
-                activeModuleId
-
-                    ? "#ea580c"
-
-                    : "rgba(234,88,12,0.4)";
-
-
-            ctx.lineWidth =
-
-                model.userData.id ===
-                activeModuleId
-
-                    ? 2
-
-                    : 1;
-
-
-            ctx.moveTo(
-                screenX,
-                screenY
-            );
-
-
-            ctx.lineTo(
-
-                screenX +
-                (
-                    right
-                        ? 30
-                        : -30
-                ),
-
-                screenY
-
-            );
-
-
-            ctx.lineTo(
-
-                right
-                    ? badgeX
-                    : badgeX +
-                      badge.offsetWidth,
-
-                screenY
-
-            );
-
-
-            ctx.stroke();
-
-
-            /*
-             * Anchor point.
-             */
-
-            ctx.beginPath();
-
-
-            ctx.fillStyle =
-                "#ea580c";
-
-
-            ctx.arc(
-
-                screenX,
-
-                screenY,
-
-                3,
-
-                0,
-
-                Math.PI * 2
-
-            );
-
-
-            ctx.fill();
-
+        if (projected.z > 1) {
+            badge.style.display = "none";
+            return;
         }
-    );
 
+        badge.style.display = "block";
+
+        const screenX = (projected.x * 0.5 + 0.5) * width;
+        const screenY = (-projected.y * 0.5 + 0.5) * height;
+
+        if (!model.userData.side) {
+            model.userData.side = screenX > width / 2 ? "right" : "left";
+        } else {
+            const buffer = 50;
+            if (model.userData.side === "left" && screenX > width / 2 + buffer) {
+                model.userData.side = "right";
+            } else if (model.userData.side === "right" && screenX < width / 2 - buffer) {
+                model.userData.side = "left";
+            }
+        }
+
+        const right = model.userData.side === "right";
+        const offset = 110;
+        const badgeX = right ? screenX + offset : screenX - offset - badge.offsetWidth;
+
+        badge.style.left = `${badgeX}px`;
+        badge.style.top = `${screenY}px`;
+
+        ctx.beginPath();
+        ctx.strokeStyle = model.userData.id === activeModuleId ? "#ea580c" : "rgba(234,88,12,0.4)";
+        ctx.lineWidth = model.userData.id === activeModuleId ? 2 : 1;
+        ctx.moveTo(screenX, screenY);
+        ctx.lineTo(screenX + (right ? 30 : -30), screenY);
+        ctx.lineTo(right ? badgeX : badgeX + badge.offsetWidth, screenY);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.fillStyle = "#ea580c";
+        ctx.arc(screenX, screenY, 3, 0, Math.PI * 2);
+        ctx.fill();
+    });
 }
-
-
 
 /* ============================================================
    ANIMATION
    ============================================================ */
 
 function animate() {
+    requestAnimationFrame(animate);
 
+    currentExplodeRatio += (targetExplodeRatio - currentExplodeRatio) * 0.10;
 
-    requestAnimationFrame(
-        animate
-    );
+    loadedModules.forEach((model, key) => {
+        const original = model.userData.initialPosition;
 
-
-    /*
-     * Smooth explosion movement.
-     */
-
-    currentExplodeRatio +=
-
-        (
-            targetExplodeRatio -
-            currentExplodeRatio
-        ) * 0.10;
-
-
-    loadedModules.forEach(
-        model => {
-
-
-            const original =
-                model.userData.initialPosition;
-
-
-            const direction =
-                model.userData.vector
-                    .clone()
-                    .multiplyScalar(
-                        currentExplodeRatio
-                    );
-
-
-            model.position.copy(
-                original
-            );
-
-
-            model.position.add(
-                direction
-            );
-
+        if (isCarouselMode) {
+            if (model.userData.id === activeModuleId) {
+                model.position.lerp(new THREE.Vector3(0, 0, 0), 0.1);
+            } else {
+                const keyIndex = moduleKeys.indexOf(key);
+                const offset = keyIndex - carouselIndex;
+                const angle = offset * (Math.PI * 2) / moduleKeys.length;
+                const radius = 6;
+                const targetPos = new THREE.Vector3(
+                    Math.sin(angle) * radius,
+                    0,
+                    Math.cos(angle) * radius - 3
+                );
+                model.position.lerp(targetPos, 0.1);
+                model.quaternion.slerp(new THREE.Quaternion(), 0.1);
+            }
+        } else {
+            const direction = model.userData.vector.clone().multiplyScalar(currentExplodeRatio);
+            const targetPos = original.clone().add(direction);
+            model.position.lerp(targetPos, 0.1);
+            model.quaternion.slerp(new THREE.Quaternion(), 0.1);
         }
-    );
+    });
 
+    if (!isCarouselMode) controls.update();
 
-    controls.update();
-
-
-    renderer.render(
-        scene,
-        camera
-    );
-
-
+    renderer.render(scene, camera);
     updateLabels();
-
 }
-
-
 
 /* ============================================================
    RESIZE
    ============================================================ */
 
-window.addEventListener(
-    "resize",
-    () => {
-
-
-        camera.aspect =
-            window.innerWidth /
-            window.innerHeight;
-
-
-        camera.updateProjectionMatrix();
-
-
-        renderer.setSize(
-
-            window.innerWidth,
-
-            window.innerHeight
-
-        );
-
-
-        leaderCanvas.width =
-            window.innerWidth;
-
-
-        leaderCanvas.height =
-            window.innerHeight;
-
-    }
-);
-
+window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    leaderCanvas.width = window.innerWidth;
+    leaderCanvas.height = window.innerHeight;
+});
 
 /* ============================================================
    INTRO VIDEO LOGIC
@@ -3185,7 +1340,6 @@ const introContainer = document.getElementById("intro-container");
 const introVideo = document.getElementById("intro-video");
 
 if (introVideo) {
-    
     introVideo.addEventListener("ended", () => {
         introContainer.style.opacity = "0";
         setTimeout(() => {
@@ -3196,61 +1350,26 @@ if (introVideo) {
     introVideo.addEventListener("error", () => {
         introContainer.style.display = "none";
     });
-    
 }
-
-
 
 /* ============================================================
    START
    ============================================================ */
 
-console.log(
-    "========================================"
-);
-
-console.log(
-    "DRÄGER PSS 7000 3D VIEWER"
-);
-
-console.log(
-    "========================================"
-);
-
-console.log(
-    "Models:"
-);
-
-console.log(
-    "  ./body.glb"
-);
-
-console.log(
-    "  ./mask.glb"
-);
-
-console.log(
-    "  ./tank.glb"
-);
-
-console.log(
-    "  ./unit.glb"
-);
-
-console.log(
-    "Draco compression: ENABLED"
-);
-
-console.log(
-    "========================================"
-);
-
+console.log("========================================");
+console.log("DRÄGER PSS 7000 3D VIEWER");
+console.log("========================================");
+console.log("Models:");
+console.log("  ./body.glb");
+console.log("  ./mask.glb");
+console.log("  ./tank.glb");
+console.log("  ./unit.glb");
+console.log("Draco compression: ENABLED");
+console.log("========================================");
 
 animate();
-
 
 </script>
 
 </body>
-
 </html>
