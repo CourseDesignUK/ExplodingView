@@ -647,7 +647,7 @@ input[type="range"]::-webkit-slider-thumb {
 <div class="carousel-nav" id="carousel-nav">
     <button class="carousel-btn" id="btn-prev">◀ PREV</button>
     <button class="carousel-btn" id="btn-next">NEXT ▶</button>
-    <button class="carousel-btn" id="btn-mute">🔊 MUTE</button>
+    <button class="carousel-btn" id="btn-narrate">🔊 NARRATE: OFF</button>
 </div>
 
 <!-- ============================================================
@@ -833,7 +833,7 @@ let carouselIndex = 0;
 let isDraggingPart = false;
 let previousMouse = { x: 0, y: 0 };
 
-let isMuted = false;
+let isNarrating = false;
 const ttsSynth = window.speechSynthesis;
 
 /* ============================================================
@@ -1043,7 +1043,7 @@ function createBadges() {
    ============================================================ */
 
 function readPanel(model) {
-    if (isMuted || !ttsSynth) return;
+    if (!isNarrating || !ttsSynth) return;
     ttsSynth.cancel();
     
     const text = `${model.userData.name}. ${model.userData.desc} Part number: ${model.userData.pno}. Material: ${model.userData.mat}. Specification: ${model.userData.flow}. Standard: ${model.userData.serv}.`;
@@ -1051,12 +1051,12 @@ function readPanel(model) {
     ttsSynth.speak(utterance);
 }
 
-document.getElementById("btn-mute").addEventListener("click", (e) => {
-    isMuted = !isMuted;
-    e.target.innerText = isMuted ? "🔇 UNMUTE" : "🔊 MUTE";
-    if (isMuted && ttsSynth) {
+document.getElementById("btn-narrate").addEventListener("click", (e) => {
+    isNarrating = !isNarrating;
+    e.target.innerText = isNarrating ? "🔊 NARRATE: ON" : "🔊 NARRATE: OFF";
+    if (!isNarrating && ttsSynth) {
         ttsSynth.cancel();
-    } else if (!isMuted && isCarouselMode && activeModuleId) {
+    } else if (isNarrating && isCarouselMode && activeModuleId) {
         readPanel(loadedModules.get(activeModuleId));
     }
 });
