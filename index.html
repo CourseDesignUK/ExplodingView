@@ -733,7 +733,7 @@ controls.enableDamping = true;
 controls.dampingFactor = 0.06;
 controls.minDistance = 0.1;
 controls.maxDistance = 100;
-controls.enablePan = false; // Prevents the model from leaving the center of the screen
+controls.enablePan = false;
 controls.target.set(0, 0, 0);
 
 /* ============================================================
@@ -959,21 +959,28 @@ loadModel("unit");
 
 function normalizeScene() {
     if (loadedModules.size === 0) return;
-    let box = new THREE.Box3().setFromObject(assemblyGroup);
-    if (box.isEmpty()) return;
 
-    const size = box.getSize(new THREE.Vector3());
-    const center = box.getCenter(new THREE.Vector3());
+    let overallBox = new THREE.Box3().setFromObject(assemblyGroup);
+    if (overallBox.isEmpty()) return;
+
+    const size = overallBox.getSize(new THREE.Vector3());
     const maxDimension = Math.max(size.x, size.y, size.z);
 
     if (maxDimension > 10) assemblyGroup.scale.setScalar(2 / maxDimension);
 
-    box = new THREE.Box3().setFromObject(assemblyGroup);
-    const newCenter = box.getCenter(new THREE.Vector3());
-    assemblyGroup.position.sub(newCenter);
+    const bodyModel = loadedModules.get("body");
+    if (bodyModel) {
+        const bodyBox = new THREE.Box3().setFromObject(bodyModel);
+        const bodyCenter = bodyBox.getCenter(new THREE.Vector3());
+        assemblyGroup.position.sub(bodyCenter);
+    } else {
+        overallBox = new THREE.Box3().setFromObject(assemblyGroup);
+        const newCenter = overallBox.getCenter(new THREE.Vector3());
+        assemblyGroup.position.sub(newCenter);
+    }
 
-    box = new THREE.Box3().setFromObject(assemblyGroup);
-    const finalSize = box.getSize(new THREE.Vector3());
+    overallBox = new THREE.Box3().setFromObject(assemblyGroup);
+    const finalSize = overallBox.getSize(new THREE.Vector3());
     const finalMax = Math.max(finalSize.x, finalSize.y, finalSize.z);
     const distance = Math.max(finalMax * 1.6, 1.5);
     baseCameraDistance = distance;
