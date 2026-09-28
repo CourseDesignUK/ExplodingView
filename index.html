@@ -848,6 +848,17 @@ function setStatus(id, text, className) {
 }
 
 /* ============================================================
+   RESET CAMERA
+   ============================================================ */
+
+function resetCamera() {
+    camera.position.set(0, 0, baseCameraDistance * 0.7);
+    controls.target.set(0, 0, 0);
+    camera.lookAt(0, 0, 0);
+    controls.update();
+}
+
+/* ============================================================
    LOAD MODEL
    ============================================================ */
 
@@ -985,9 +996,7 @@ function normalizeScene() {
     const distance = Math.max(finalMax * 1.6, 1.5);
     baseCameraDistance = distance;
 
-    camera.position.set(0, 0, distance * 0.7);
-    controls.target.set(0, 0, 0);
-    controls.update();
+    resetCamera();
 }
 
 /* ============================================================
@@ -1122,6 +1131,7 @@ document.getElementById("btn-assemble").addEventListener("click", () => {
 document.getElementById("btn-explode").addEventListener("click", () => {
     targetExplodeRatio = 1;
     updateCarouselState();
+    resetCamera(); // Snaps camera exactly back to default rotation and look target
 });
 
 document.getElementById("btn-prev").addEventListener("click", () => {
@@ -1303,6 +1313,7 @@ function animate() {
     if (isCarouselMode) {
         camera.position.lerp(new THREE.Vector3(0, 0, baseCameraDistance * 0.7), 0.05);
         controls.target.lerp(new THREE.Vector3(0, 0, 0), 0.05);
+        camera.lookAt(controls.target);
     } else {
         controls.target.lerp(new THREE.Vector3(0, 0, 0), 0.05);
     }
